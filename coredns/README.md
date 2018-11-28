@@ -47,6 +47,7 @@ local coredns = import "coredns/coredns.libsonnet";
 
 coredns {
   _config+:: {
+    namespace: "kube-system",
     replicas: 3,
   },
 }
@@ -60,11 +61,12 @@ $ ks apply kube-system
 
 ## Customising the deployment
 
-The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the `_config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are no exposed by the config field.
+The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are no exposed by the config field.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
 | replicas  | 3 | Number of coredns replicas. |
+| clusterDomain | "cluster.local" | The cluster domain used for in cluster name resolution. |
 
 You can override the config source in your environment file:
 ```
@@ -72,6 +74,7 @@ local coredns = import "coredns/coredns.libsonnet";
 
 coredns {
   _config+:: {
+    clusterDomain: "cluster.local",
     replicas: 3,
   }
 
