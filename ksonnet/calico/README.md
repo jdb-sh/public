@@ -1,5 +1,5 @@
-# CoreDNS Ksonnet Library for Kubernetes
-A configurable CoreDNS deployment for Kubernetes using ksonnet. As coredns uses a configmap for most of its configuration, modifying to suit your needs is as simple as redefining the Corefile data.
+# Calico Ksonnet Library for Kubernetes
+A configurable Calico DaemonSet for Kubernetes using ksonnet.
 
 > NOTE: This project is *alpha* stage. Flags, configuration, behaviour and design may change significantly in following releases.
 
@@ -36,16 +36,16 @@ MacOS
 ```
 $ go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb
 $ jb init
-$ jb install github.com/jdbaldry/jdb.sh/public/ksonnet/coredns
+$ jb install github.com/jdbaldry/jdb.sh/public/ksonnet/calico
 
 ```
 
 Assuming you want to run three replicas in the kube-system namespace ('environment' in ksonnet parlance), add the follow to the file `environments/kube-system/main.jsonnet`:
 
 ```
-local coredns = import "coredns/coredns.libsonnet";
+local calico = import "calico/calico.libsonnet";
 
-coredns {
+calico {
   _config+:: {
     namespace: "kube-system",
     replicas: 3,
@@ -61,7 +61,7 @@ $ ks apply kube-system
 
 ## Customising the deployment
 
-The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are not exposed by the config field.
+The calico ksonnet library allows you to easily configure a number of aspects of your calico deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are not exposed by the config field.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
