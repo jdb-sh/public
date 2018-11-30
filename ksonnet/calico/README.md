@@ -1,5 +1,7 @@
 # Calico Ksonnet Library for Kubernetes
-A configurable Calico DaemonSet for Kubernetes using ksonnet.
+A configurable Calico ksonnet library for deployment to Kubernetes based on [Calico Version v3.3.1](https://docs.projectcalico.org/v3.3/releases#v3.3.1).
+
+Currently only supports insecure connection to the Kubernetes etcd datastore.
 
 > NOTE: This project is *alpha* stage. Flags, configuration, behaviour and design may change significantly in following releases.
 
@@ -30,7 +32,7 @@ $ cd <application name>
 $ ks env add default
 ```
 
-Install the coredns library which will fetch its dependencies:
+Install the calico library which will fetch its dependencies:
 
 MacOS
 ```
@@ -65,18 +67,24 @@ The calico ksonnet library allows you to easily configure a number of aspects of
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
-| replicas  | 3 | Number of coredns replicas. |
-| clusterDomain | "cluster.local" | The cluster domain used for in cluster name resolution. |
+| namespace | "kube-system" | Which namespace to deploy calico to. |
+| calicoIPv4PoolCIDR | "100.64.0.0/13" | The default IPv4 pool to create on startup if none exists. Pod IPs will be chosen from this range. Changing this value after installation will have no effect. This should fall within `--cluster-cidr`. |
+| enabledControllers | "policy,namespace,serviceaccount,workloadendpoint,node" | The calico-kube-controllers controllers to run. |
+| etcdEndpoints | Required | The location of the Calico etcd cluster. |
+| etcdCACertFile | "" | Location of the CA certificate for etcd. |
+| etcdKeyFile | "" | Location of the client key for etcd. |
+| etcdCertFile | "" | Location of the client certificate for etcd. |
+| kubeControllersReplicas  | 1 | Number of calico-kube-controllers replicas. |
+| vethMTU | "" | CNI MTU Config variable. |
+
 
 You can override the config source in your environment file:
 ```
-local coredns = import "coredns/coredns.libsonnet";
+local calico = import "calico/calico.libsonnet";
 
-coredns {
+calico {
   _config+:: {
-    clusterDomain: "cluster.local",
-    replicas: 3,
+    etcdEndpoints: "<etcd endpoints>",
   }
-
-  corednsConfig:: (import "/path/to/your/Corefile.libsonnet")
 }
+```
