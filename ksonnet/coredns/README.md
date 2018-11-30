@@ -67,6 +67,8 @@ The coreDNS ksonnet library allows you to easily configure a number of aspects o
 | --- | ------- | ----------- |
 | replicas  | 3 | Number of coredns replicas. |
 | clusterDomain | "cluster.local" | The cluster domain used for in cluster name resolution. |
+| clusterIP | "100.64.0.10" | ClusterIP of for kube-dns service. |
+| upstream | "/etc/resolv.conf" | Source of upstream DNS. |
 
 You can override the config source in your environment file:
 ```

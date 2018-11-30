@@ -47,13 +47,13 @@
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
-        proxy . /etc/resolv.conf
+        proxy . %(upstream)s
         cache 30
         loop
         reload
         loadbalance
       }
-    ||| % { clusterDomain: $._config.clusterDomain },
+    ||| % $._config ,
   },
 
   local configMap = $.core.v1.configMap,
@@ -124,7 +124,7 @@
       $.corednsDeployment.spec.template.metadata.labels,  // selector
       ports,
     ) +
-    service.mixin.spec.withClusterIp("10.100.0.10") +
+    service.mixin.spec.withClusterIp($._config.clusterIP) +
     service.mixin.metadata.withAnnotations({
       "prometheus.io/port": "9153",
       "prometheus.io/scrape": "true",
