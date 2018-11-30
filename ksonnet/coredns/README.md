@@ -61,12 +61,14 @@ $ ks apply kube-system
 
 ## Customising the deployment
 
-The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are not exposed by the config field.
+The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are no exposed by the config field.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
 | replicas  | 3 | Number of coredns replicas. |
 | clusterDomain | "cluster.local" | The cluster domain used for in cluster name resolution. |
+| clusterIP | "100.64.0.10" | ClusterIP of for kube-dns service. |
+| upstream | "/etc/resolv.conf" | Source of upstream DNS. |
 
 You can override the config source in your environment file:
 ```
