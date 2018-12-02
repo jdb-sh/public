@@ -146,6 +146,6 @@
     $.util.hostVolumeMount("var-lib-calico", "/var/lib/calico", "/var/lib/calcio", false) +
     $.util.hostVolumeMount("xtables-lock", "/run/xtables.lock", "/run/xtables-lock", false) +
     $.util.hostVolumeMount("cni-bin-dir", "/opt/cni/bin", "/host/opt/cni/bin", false) +
-    $.util.hostVolumeMount("cni-net-dir", "/etc/cni.net.d", "/host/etc/cni/net.d", false) +
+    $.util.hostVolumeMount("cni-net-dir", "/etc/cni/net.d", "/host/etc/cni/net.d", false) +
     $.util.secretVolumeMount("calico", "/calico-secrets", 400),
 }
