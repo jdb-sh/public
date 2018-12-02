@@ -1,23 +1,16 @@
 {
   local policyRule = $.rbac.v1beta1.policyRule,
 
-  calicoKubeControllersRBAC: $.util.rbac("calico-kube-controllers", [
-    policyRule.new() +
-    policyRule.withApiGroups(["", "extensions"]) +
-    policyRule.withResources(["pods", "namespaces", "networkpolicies", "nodes", "serviceaccounts"]) +
-    policyRule.withVerbs(["watch", "list"]),
-
-    policyRule.new() +
-    policyRule.withApiGroups(["networking.k8s.io"]) +
-    policyRule.withResources(["networkpolicies"]) +
-    policyRule.withVerbs(["watch", "list"]),
-  ]),
-
   calicoNodeRBAC: $.util.rbac("calico-node", [
     policyRule.new() +
     policyRule.withApiGroups([""]) +
-    policyRule.withResources(["pods", "namespaces", "nodes"]) +
-    policyRule.withVerbs(["get"]),
+    policyRule.withResources(["pods", "namespaces") +
+    policyRule.withVerbs(["get"),
+
+    policyRule.new() +
+    policyRule.withApiGroups([""]) +
+    policyRule.withResources(["nodes"]) +
+    policyRule.withVerbs(["patch"]),
   ]),
 
   calicoNodeConfig:: {
@@ -143,7 +136,7 @@
     daemonSet.mixin.metadata.withAnnotations({ "scheduler.alpha.kubernetes.io/critical-pod": "" }) +
     $.util.hostVolumeMount("lib-modules", "/lib/modules", "/lib/modules", true) +
     $.util.hostVolumeMount("var-run-calico", "/var/run.calico", "/var/run/calico", false) +
-    $.util.hostVolumeMount("var-lib-calico", "/var/lib/calico", "/var/lib/calcio", false) +
+    $.util.hostVolumeMount("var-lib-calico", "/var/lib/calico", "/var/lib/calico", false) +
     $.util.hostVolumeMount("xtables-lock", "/run/xtables.lock", "/run/xtables-lock", false) +
     $.util.hostVolumeMount("cni-bin-dir", "/opt/cni/bin", "/host/opt/cni/bin", false) +
     $.util.hostVolumeMount("cni-net-dir", "/etc/cni/net.d", "/host/etc/cni/net.d", false) +
