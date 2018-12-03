@@ -135,7 +135,7 @@
     daemonSet.mixin.spec.template.spec.withServiceAccountName("calico-node") +
     daemonSet.mixin.metadata.withAnnotations({ "scheduler.alpha.kubernetes.io/critical-pod": "" }) +
     $.util.hostVolumeMount("lib-modules", "/lib/modules", "/lib/modules", true) +
-    $.util.hostVolumeMount("var-run-calico", "/var/run.calico", "/var/run/calico", false) +
+    $.util.hostVolumeMount("var-run-calico", "/var/run/calico", "/var/run/calico", false) +
     $.util.hostVolumeMount("var-lib-calico", "/var/lib/calico", "/var/lib/calico", false) +
     $.util.hostVolumeMount("xtables-lock", "/run/xtables.lock", "/run/xtables-lock", false) +
     $.util.hostVolumeMount("cni-bin-dir", "/opt/cni/bin", "/host/opt/cni/bin", false) +
