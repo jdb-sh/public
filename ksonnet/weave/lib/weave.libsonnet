@@ -32,7 +32,7 @@
   local configMap = $.core.v1.configMap,
 
   weaveConfigMap:
-    configMap.new("weave-net") +
+    configMap.new("weave-net"),
 
   local container = $.core.v1.container,
   local envFrom = container.envFromType,
@@ -72,8 +72,8 @@
     daemonSet.mixin.metadata.withAnnotations({ "scheduler.alpha.kubernetes.io/critical-pod": "" }) +
     $.util.hostVolumeMount("weavedb", "/var/lib/weave", "/weavedb", false) +
     $.util.hostVolumeMount("xtables-lock", "/run/xtables.lock", "/run/xtables-lock", false) +
-    $.util.hostVolumeMount("cni-bin-dir", %(cniBinDir)s, "/host/opt/cni/bin", false) % $._config +
-    $.util.hostVolumeMount("cni-net-dir", %(cniNetDir)s, "/host/etc/cni/net.d", false) % $._config +
+    $.util.hostVolumeMount("cni-bin-dir", $._config.cniBinDir, "/host/opt/cni/bin", false) +
+    $.util.hostVolumeMount("cni-net-dir", $._config.cniNetDir, "/host/etc/cni/net.d", false) +
     $.util.hostVolumeMount("lib-modules", "/lib/modules", "/lib/modules", false) +
     $.util.hostVolumeMount("dbus", "/var/lib/dbus", "/host/var/lib/dbus", false),
 }
