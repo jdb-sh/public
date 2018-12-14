@@ -1,6 +1,8 @@
 # Prometheus Custom Metrics API Server Ksonnet Library for Kubernetes
 Ksonnet library for deploy the [k8s-prometheus-adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter) to expose Prometheus metrics behind the Kubernetes custom metrics API.
 
+A full walkthrough for using custom metrics is included in the k8s-prometheus-adapter repository -- https://github.com/DirectXMan12/k8s-prometheus-adapter/blob/master/docs/walkthrough.md. This library is not built to directly compliment the prometheus-operator and instead uses the [prometheus-ksonnet](https://github.com/grafana/jsonnet-libs/tree/master/prometheus-ksonnet) jsonnet library, so changes to the adapter configuration will need adjusting to work with the walkthrough.
+
 ## How to use
 
 This library is designed to be vendored into the repo with your infrastructure config.
