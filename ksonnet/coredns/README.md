@@ -36,7 +36,7 @@ MacOS
 ```
 $ go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb
 $ jb init
-$ jb install github.com/jdbaldry/jdb.sh/public/ksonnet/coredns
+$ jb install github.com/jdb-sh/public/ksonnet/coredns
 
 ```
 
@@ -61,7 +61,7 @@ $ ks apply kube-system
 
 ## Customising the deployment
 
-The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are no exposed by the config field.
+The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets late merging to add extra changes or modify objects that are no exposed by the config field.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
@@ -82,3 +82,4 @@ coredns {
 
   corednsConfig:: (import "/path/to/your/Corefile.libsonnet")
 }
+```

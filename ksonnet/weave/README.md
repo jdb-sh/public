@@ -29,22 +29,22 @@ $ cd <application name>
 $ ks env add default
 ```
 
-Install the coredns library which will fetch its dependencies:
+Install the weave library which will fetch its dependencies:
 
 MacOS
 ```
 $ go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb
 $ jb init
-$ jb install github.com/jdbaldry/jdb.sh/public/ksonnet/weave
+$ jb install github.com/jdb-sh/public/ksonnet/weave
 
 ```
 
 Assuming you want to run three replicas in the kube-system namespace ('environment' in ksonnet parlance), add the follow to the file `environments/kube-system/main.jsonnet`:
 
 ```
-local coredns = import "coredns/coredns.libsonnet";
+local weave = import "weave/weave.libsonnet";
 
-coredns {
+weave {
   _config+:: {
     namespace: "kube-system",
   },
@@ -59,7 +59,7 @@ $ ks apply kube-system
 
 ## Customising the deployment
 
-The coreDNS ksonnet library allows you to easily configure a number of aspects of your coreDNS deployment using the ` _config+::` extension point. Of course, you can always use jsonnets lazy merging to add extra changes or modify objects that are no exposed by the config field.
+The weave ksonnet library allows you to easily configure a number of aspects of your weave deployment using the ` _config+::` extension point. Of course, you can always use jsonnets late merging to add extra changes or modify objects that are no exposed by the config field.
 
 | Key | Default | Description |
 | --- | ------- | ----------- |
@@ -78,3 +78,4 @@ weave {
     cniNetDir: "/your/cni/net/dir",
   }
 }
+```
