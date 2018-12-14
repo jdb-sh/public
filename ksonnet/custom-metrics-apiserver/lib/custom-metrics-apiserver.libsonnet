@@ -101,39 +101,39 @@
           matches: "^(.*)_total"
           as: "${1}_per_second"
         metricsQuery: "sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)"
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",pod_name!=""}"
+      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
         seriesFilters: []
         resources:
           overrides:
             namespace:
               resource: namespace
-            pod_name:
+            instance:
               resource: pod
         name:
           matches: ^container_(.*)_seconds_total$
           as: ""
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>,container_name!="POD"}[1m])) by (<<.GroupBy>>)
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",pod_name!=""}"
+      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
         seriesFilters:
         - isNot: ^container_.*_seconds_total$
         resources:
           overrides:
             namespace:
               resource: namespace
-            pod_name:
+            instance:
               resource: pod
         name:
           matches: ^container_(.*)_total$
           as: ""
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>,container_name!="POD"}[1m])) by (<<.GroupBy>>)
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",pod_name!=""}"
+      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
         seriesFilters:
         - isNot: ^container_.*_total$
         resources:
           overrides:
             namespace:
               resource: namespace
-            pod_name:
+            instance:
               resource: pod
         name:
           matches: ^container_(.*)$
@@ -175,7 +175,7 @@
                 resource: node
               namespace:
                 resource: namespace
-              pod_name:
+              instance:
                 resource: pod
           containerLabel: container_name
         memory:
@@ -187,7 +187,7 @@
                 resource: node
               namespace:
                 resource: namespace
-              pod_name:
+              instance:
                 resource: pod
           containerLabel: container_name
         window: 1m
