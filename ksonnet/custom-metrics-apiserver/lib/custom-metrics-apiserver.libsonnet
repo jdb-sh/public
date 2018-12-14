@@ -1,21 +1,21 @@
 {
   customMetricsAPIServerAPIService: {
-    "apiVersion": "apiregistration.k8s.io/v1beta1",
-    "kind": "APIService",
-    "metadata": {
-      "name": "v1beta1.custom.metrics.k8s.io"
+    apiVersion: "apiregistration.k8s.io/v1beta1",
+    kind: "APIService",
+    metadata: {
+      name: "v1beta1.custom.metrics.k8s.io",
     },
-    "spec": {
-      "insecureSkipTLSVerify": true,
-      "group": "custom.metrics.k8s.io",
-      "version": "v1beta1",
-      "groupPriorityMinimum": 1000,
-      "versionPriority": 10,
-      "service": {
-        "name": $._config.name,
-        "namespace": $._config.namespace
-      }
-    }
+    spec: {
+      insecureSkipTLSVerify: true,
+      group: "custom.metrics.k8s.io",
+      version: "v1beta1",
+      groupPriorityMinimum: 1000,
+      versionPriority: 10,
+      service: {
+        name: $._config.name,
+        namespace: $._config.namespace,
+      },
+    },
   },
 
   local serviceAccount = $.core.v1.serviceAccount,
@@ -71,7 +71,7 @@
       policyRule.new() +
       policyRule.withApiGroups(["metrics.k8s.io"]) +
       policyRule.withResources(["*"]) +
-      policyRule.withVerbs(["*"])
+      policyRule.withVerbs(["*"]),
     ]),
 
   local roleBinding = $.rbac.v1beta1.roleBinding,
@@ -191,7 +191,7 @@
                 resource: pod
           containerLabel: container_name
         window: 1m
-    |||
+    |||,
   },
 
   local configMap = $.core.v1.configMap,

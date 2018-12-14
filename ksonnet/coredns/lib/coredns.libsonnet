@@ -53,7 +53,7 @@
         reload
         loadbalance
       }
-    ||| % $._config ,
+    ||| % $._config,
   },
 
   local configMap = $.core.v1.configMap,
@@ -97,7 +97,7 @@
     $.util.configVolumeMount("coredns", "/etc/coredns") +
     deployment.mixin.spec.template.spec.withServiceAccountName("coredns") +
     deployment.mixin.spec.template.metadata.withLabels({
-      "name": "coredns",
+      name: "coredns",
       "k8s-app": "kube-dns",
       "kubernetes.io/name": "CoreDNS",
     }) +
