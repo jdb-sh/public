@@ -92,7 +92,7 @@
   customMetricsAPIServerConfig:: {
     "config.yml": |||
       rules:
-      - seriesQuery: "http_requests_total"
+      - seriesQuery: 'http_requests_total{namespace!=""}'
         resources:
           overrides:
             namespace: {resource: "namespace"}
@@ -100,9 +100,8 @@
         name:
           matches: "^(.*)_total"
           as: "${1}_per_second"
-        metricsQuery: "sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)"
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
-        seriesFilters: []
+        metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)'
+      - seriesQuery: '{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}'
         resources:
           overrides:
             namespace:
@@ -113,7 +112,7 @@
           matches: ^container_(.*)_seconds_total$
           as: ""
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>,container_name!="POD"}[1m])) by (<<.GroupBy>>)
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
+      - seriesQuery: '{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}'
         seriesFilters:
         - isNot: ^container_.*_seconds_total$
         resources:
@@ -124,9 +123,9 @@
               resource: pod
         name:
           matches: ^container_(.*)_total$
-          as: ""
+          as: ''
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>,container_name!="POD"}[1m])) by (<<.GroupBy>>)
-      - seriesQuery: "{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}"
+      - seriesQuery: '{__name__=~"^container_.*",container_name!="POD",namespace!="",instance!=""}'
         seriesFilters:
         - isNot: ^container_.*_total$
         resources:
@@ -137,33 +136,33 @@
               resource: pod
         name:
           matches: ^container_(.*)$
-          as: ""
+          as: ''
         metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>,container_name!="POD"}) by (<<.GroupBy>>)
-      - seriesQuery: "{namespace!="",__name__!~"^container_.*"}"
+      - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
         seriesFilters:
         - isNot: .*_total$
         resources:
           template: <<.Resource>>
         name:
-          matches: ""
-          as: ""
+          matches: ''
+          as: ''
         metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
-      - seriesQuery: "{namespace!="",__name__!~"^container_.*"}"
+      - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
         seriesFilters:
         - isNot: .*_seconds_total
         resources:
           template: <<.Resource>>
         name:
           matches: ^(.*)_total$
-          as: ""
+          as: ''
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
-      - seriesQuery: "{namespace!="",__name__!~"^container_.*"}"
+      - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
         seriesFilters: []
         resources:
           template: <<.Resource>>
         name:
           matches: ^(.*)_seconds_total$
-          as: ""
+          as: ''
         metricsQuery: sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)
       resourceRules:
         cpu:
